@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %} Reservar {% endblock %}
+
+{% block body %}
+
+<form method="POST"> {% csrf_token %}
+
+    <h2 class="mt-2 text-center alert alert-info">Introduzca los siguientes datos para completar su reserva</h2>
+
+    <div class="row">
+        <div class="col-8"">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col">{{ reserva_habitacion_form.nombre.label }}</div>
+                    <div class="col-10">{{ reserva_habitacion_form.nombre }}</div>
+                </div>
+            </div>
+            <br>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col">{{ reserva_habitacion_form.email.label }}</div>
+                    <div class="col-10">{{ reserva_habitacion_form.email }}</div>
+                </div>
+            </div>
+            <br>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col">{{ reserva_habitacion_form.telefono.label }}</div>
+                    <div class="col-10">{{ reserva_habitacion_form.telefono }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="">
+                <h2>Información de Pago</h2>
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <td><b>Días de estancia</b></td>
+                        <td style="text-align: right;">{{ dias }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Subtotal</b></td>
+                        <td style="text-align: right;">{{ subtotal|floatformat:2 }} €</td>
+                    </tr>
+                    <tr>
+                        <td><b>IGIC 7%</b></td>
+                        <td style="text-align: right;">{{ impuestos|floatformat:2 }} €</td>
+                    </tr>
+                    <tr>
+                        <td><b>TOTAL</b></td>
+                        <td style="text-align: right;">{{ total|floatformat:2 }} €</td>
+                    </tr>
+                </table>
+            </div>
+            <button class="mt-1 btn btn-block btn-primary" type="submit">Confirmar Reserva</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load buscador_filters %}
+
+{% block title %} Elegir Fechas {% endblock %}
+
+{% block body %}
+<section class="mb-0">
+    <form class="mt-0 mb-0 alert alert-primary" method="POST"> {% csrf_token %}
+        <h2 class="mt-2 mb-4 text-center">Datos para la reserva</h2>
+        
+        {% if error != None %}
+        <div class="alert alert-danger row">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-3">{{ reserva_fechas_form.fecha_entrada }}</div>
+            <div class="col-3">{{ reserva_fechas_form.fecha_salida }}</div>
+            
+            <div class="col-3">{{ reserva_fechas_form.n_huespedes }}</div>
+            <button class="col-3 btn btn-info" type="submit">BUSCAR</button>
+        </div>
+    </form>
+</section>
+
+{% if fecha_seleccionada == 1 %}
+<section class="mt-0 alert alert-light">
+    <div>
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="alert alert-info">
+                    <th>Tipo</th>
+                    <th>Disponibilidad</th>
+                    <th>Precio Total</th>
+                    <th>Reservar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for habitacion, cantidad in habitaciones.items %}
+                    <tr>
+                        <td>Suite {{ habitacion.tipo }}</td>
+                        <td>{{ cantidad }} habitaciones</td>
+                        <td>{{ habitacion.precio|multiply:dias_reserva }} €</td>
+                        <td><a href="{% url 'reservar' id_habitacion=habitacion.id %}" class="btn btn-success"><span class="fa fa-bed"/></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endif %}
+
+<script>
+    // Activando el Datepicker y añadiendo ciertas opciones.
+    var today = new Date();
+    var today_string = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+        endDate: '31/12/2020',
+        todayHighlight: true,
+        weekStart: 1,
+        autoclose: true,
+        startDate: today_string,
+    });
+</script>
+
+{% block elegir_habitacion %} {% endblock %}
+
+{% endblock %}
