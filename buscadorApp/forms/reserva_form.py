@@ -100,7 +100,6 @@ class ReservaHabitacionForm(forms.Form):
                                     'placeholder': 'Ej: +36 699-633-369',
                                     'pattern': '^\+?[0-9\s\-]+',
                                 }), required=True)
-
     
     def clean(self):
         cleaned_data = super().clean()

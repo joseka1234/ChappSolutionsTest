@@ -12,6 +12,9 @@ BUILDDIR      = build
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
+pdf:
+	@$(SPHINXBUILD) -b rinoh source build/rinoh
+
 .PHONY: help Makefile
 
 # Catch-all target: route all unknown targets to Sphinx using the new
